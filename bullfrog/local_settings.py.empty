@@ -1,0 +1,15 @@
+# PRODUCTION SETTINGS
+# these settings override the default settings in settings.py
+# this file should NOT be committed to source control!!
+
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = '' # create long random string here
+
+DEBUG = False
+
+ALLOWED_HOSTS = [
+    '1.2.3.4',  # set to local ip of production server
+]
+
+DEFAULT_PASSWORD = ''  # set a default password for new users. they will need to change it on first use

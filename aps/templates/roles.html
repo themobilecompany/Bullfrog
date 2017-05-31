@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h2>Roles</h2>
+{% endblock %}
+{% block content %}
+    <p>Roles are not relevant for Attention Points, as these are assigned to <a href="{% url 'rolefillers' %}">Role Fillers</a>.<br/>
+        All Roles are listed here just to verify which roles are synchronised in the Bullfrog database.</p>
+    {% include "role_list.html" with object_list=roles.object_list %}
+{% endblock %}

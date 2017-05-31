@@ -1,0 +1,3 @@
+{
+    "circles": {% include "circle_list.json" with total=circles.total object_list=circles.object_list %}
+}

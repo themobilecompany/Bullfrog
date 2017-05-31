@@ -1,0 +1,295 @@
+html, body{
+    margin: 0px;
+    padding: 0px;
+    font-family: Open Sans, Roboto, "Helvetica Neue", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    line-height: 1.5;
+    color: #373737;
+}
+
+nav{
+    font-size:16px;
+    margin: 0px;
+    padding:0px;
+}
+
+nav ul{
+    margin:0px;
+    padding:0px;
+}
+
+nav ul.welcome{
+    color: rgb(98, 98, 98);
+    font-size:12px;
+    font-weight:bold;
+    text-align:right;
+    margin:20px 0px 0px;
+    height:30px;
+}
+nav ul.menu{
+    color: white;
+    background-color: #f34837;
+    height:30px;
+    vertical-align:middle;
+}
+
+.clearfix:after {
+   content: " ";
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+nav ul li{
+    margin:0px;
+    padding:0px;
+    display: inline-block;
+    height:100%;
+    box-sizing:border-box;
+}
+nav ul.welcome li{
+    margin:4px;
+    padding:0px;
+    display: inline;
+}
+nav ul li a{
+    color: inherit;
+    display: inline-block;
+    text-decoration: none;
+}
+nav ul.menu li.secondary{
+    float:right;
+}
+nav ul.menu li a{
+    padding: 3px 12px 0px 12px;
+    box-sizing:border-box;
+    height:100%
+}
+nav ul.menu li a:hover{
+    background-color:#ff6c5b;
+}
+
+
+.row{
+    max-width: 75rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div#header{
+    background: #FAFAFA;
+    border-bottom: 1px solid #DDD;
+    padding-top:25px;
+    padding-bottom: 25px;
+    position: relative;
+    margin:0;
+}
+div#content{
+    padding-top:2em;
+}
+ol.breadcrumb{
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+ol.breadcrumb li{
+    display:inline;
+        font-size:11px;
+}
+
+table.list{
+    border-collapse:collapse;
+    min-width:520px;
+    margin: 0 0 15px 0;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.35),0 0 1px rgba(0,0,0,0.2);
+    border-radius: 3px;
+    line-height: 1.5;
+    font-size: 14px;
+    background-color:white;
+}
+div.action table.list{
+    min-width:495px;
+}
+
+table.list tr.headerbar th{
+    color: #373737;
+    font-size: 14px;
+    font-weight: 700;
+    text-align:left;
+    padding: 8px 10px;
+    background: #FAFAFA;
+    border-bottom: 1px solid #EEE;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+table.list tr.totalsbar td,
+table.list tr.totalsbar:hover td{
+    background: #FAFAFA;
+    line-height:30%;
+}
+table.list tr.totalsbar td:first-of-type{
+    text-align:right;
+}
+table.list tr:hover > td{
+    background:#f5fafb;
+}
+table.list td{
+    border-bottom: 1px solid #DDD;
+    font-size: 14px;
+    padding: 12px 10px;
+}
+table.list td:first-of-type{
+    font-weight:bold;
+}
+
+ol.breadcrumb a,
+table.list th a,
+table.list td a{
+    text-decoration: none;
+    color: #3F9BB2; /*TMC red: #f34837; /* glassfrog uses #3F9BB2 */
+}
+table.list td.icons,
+table.list td:last-of-type{
+    width:32px;
+    white-space:nowrap;
+}
+
+table.list tr.headerbar th.number,
+table.list tr.totalsbar th.number,
+table.list td.number{
+    text-align:right;
+}
+table.list tr.totalsbar td.number{
+    font-weight:bold;
+}
+table.list tr.totalsbar td.total:before{
+    /* content:"Σ "; */
+}
+
+h2{
+    display: inline-block;
+    text-rendering: optimizeLegibility;
+    font-style:normal;
+    padding:0;
+    color: #222;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.15;
+    margin: 0;
+    position: relative;
+}
+
+h3{
+    color: #222;
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0 0 0.5em 0;
+}
+h4{
+    margin: 0 0 0.5em 0;
+}
+
+
+div.sectionwrapper{
+    padding-bottom:1.5em;
+    /* ClearFix hack for collapsing floats */
+    clear:both;
+    content:"";
+    display: table;
+}
+div.section{
+    margin:0;
+    display:inline-block;
+}
+div.section.infobox,
+div.section.action{
+    border:3px solid #ff6c5b;;
+    border-radius: 6px;
+    padding:10px;
+}
+div.section.action,
+table.list tr.deleted,
+table.list tr.action{
+    background-color:#fee9e7;
+}
+/* dont color the table row red if it is inside an action div */
+div.section.action table.list tr.deleted,
+div.section.action table.list tr.action{
+    background-color: inherit;
+}
+div.section.circle_detail{
+    float: left;
+}
+div.section.infobox{
+    font-size:smaller;
+    background-color:#fffcaa;
+    border-color:#ffde28;
+    width: 30%;
+    float: left;
+    margin-top: 3.5em;
+    margin-left: 2.8em;
+    position: fixed;
+    top:20%;
+    right:10%;
+    width: 250px;
+}
+div.section.infobox p{
+    font-size:90%;
+}
+
+table.list tr.deleted{
+    text-decoration:line-through;
+}
+table.list tr.hidden{
+    display:none;
+}
+table.list form{
+    padding:0px;
+    margin:0px;
+}
+        
+div.section p{
+    font-size:14px;
+}
+
+button,
+input[type=submit],
+input[type=button]{
+display: inline-block;
+    text-align: center;
+    line-height: 1;
+    transition: background-color 0.25s ease-out, color 0.25s ease-out;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    padding: 0.85em 1em;
+    margin: 0 0 1rem 0;
+    font-size: 0.9rem;
+    background-color: #ff6c5b;
+    color: #fff;
+}
+button:hover,
+input[type=submit]:hover,
+input[type=button]:hover{
+    background-color: #f34837;
+}
+input[name=attention_points]{
+    width:5em;
+    text-align:right;
+    border:1px solid #ddd;
+    background-color:transparent;
+}
+input[name=attention_points].editmode{
+    border:2px solid #4286f4;
+    border-radius:0;
+    background-color:white;
+}
+input[disabled]{
+    background-color:lightgrey;
+}
+
+input[type=submit].button_small{
+    margin:0px;
+    padding:3px;
+    font-size:0.8rem;
+}

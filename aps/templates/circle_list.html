@@ -1,0 +1,54 @@
+{% load static %}
+        <table class="circle list">
+            <tr class="headerbar">
+                <th>Name</th>
+                <th class="number">Points<br/>granted</th>
+                <th class="number">Points<br/>assigned</th>
+                <th class="number">Balance</th>
+                <th></th>
+            </tr>
+            {% if attention_points_granted %}
+            <tr class="totalsbar">
+                <td></td>
+                <td id="circle_list_granted" class="total number">{{ attention_points_granted }}</td>
+                <td id="circle_list_assigned" class="total number">{{ attention_points_assigned }}</td>
+                <td id="circle_list_balance" class="total number">{{ attention_points_balance }}</td>
+                <td></td>
+            </tr>
+            {% endif %}
+            {% for obj in object_list %}
+                <tr class="{% if obj.attention_points == 0  %}action{% endif %} {% if obj.is_deleted_in_glassfrog == 1  %}deleted{% endif %}" >
+                    <td><a href="{% url 'circle_detail' pk=obj.pk %}" >{{ obj.name }}</a></td>
+                    {% if obj in leadlink_subcircles%}
+                    <td class="number granted">
+                        <form class="aps_update_form" action="{% url 'circle_update' pk=obj.pk %}?next={{ request.path }}" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="attention_points" value="{{ obj.attention_points_granted }}" />
+                            <input type="submit" value="Update" class="button_small" style="display:none;" />
+                        </form>
+                    </td>
+                    {% else %}
+                    <td class="number granted">{{ obj.attention_points_granted }}</td>
+                    {% endif %}
+                    <td class="number assigned">{{ obj.attention_points_assigned }}</td>
+                    <td class="number balance">{{ obj.attention_points_balance }}</td>
+
+                    <td class="icons">
+                        {% if obj.is_deleted_in_glassfrog %}
+                            <form class="aps_delete" action="{% url 'circle_delete' obj.id %}" method="post">{% csrf_token %}
+                                <input type="image" name="delete" value="Confirm" src="{% static "img/delete.icon.png" %}" alt="Delete" height="16" />
+                            </form> <p></p>
+                        {% else %}
+                            <a href="{{ obj.glassfrog_url }}" target="glassfrog">
+                                <img src="{% static "img/glassfrog.icon.png" %}" alt="View in glassfrog" height="16" />
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <!-- include javascript to do some AJAX magic -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="{% static "js/main.js" %}"></script>
+

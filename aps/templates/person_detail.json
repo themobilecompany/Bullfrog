@@ -1,0 +1,28 @@
+{
+
+    "contract_fte": {{ object.contract_fte }},
+    "circle_count": {{ additional_context.circle_count }},
+    "rolefiller_count": {{ additional_context.rolefiller_count }},
+    "attention_points": {{ additional_context.attention_points_sum }},
+    "utilisation": {{ object.expected_utilisation }},
+    "roles": [
+        {% for circle in additional_context.circles %}
+            {
+                "circle_pk": {{circle.pk}},
+                "circle_name": "{{circle}}",
+                "circle_total_attention_points": "{{circle.total_attention_points}}",
+                "circle_roles": [
+                    {% for rolefiller in circle.person_roles %}
+                        {
+                            "action_required": {% if rolefiller.attention_points == 0  %}true{%else%}false{% endif %},
+                            "role_name": "{{rolefiller.role}}",
+                            "attention_points":{{rolefiller.attention_points}}
+                        }
+                        {% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                    ]
+            }
+            {% if not forloop.last %},{% endif %}
+        {% endfor %}
+        ]
+}

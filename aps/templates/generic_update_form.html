@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h2>Edit {{ form.instance }}</h2>
+{% endblock %}
+{% block content %}
+    <form action="" method="post">{% csrf_token %}
+        {{ form.as_p  }}
+        <input type="submit" value="Update" class="primary_button" />
+        <input type="button" value="Cancel" onClick="javascript:window.history.back();" class="secondary_button" />
+    </form>
+    <p>
+        Or, <a href="{% url view.delete_url pk=object.pk %}" target="_self">delete</a>.
+    </p>
+{% endblock %}

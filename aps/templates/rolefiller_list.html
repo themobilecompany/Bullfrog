@@ -1,0 +1,63 @@
+{% load static %}
+        <table class="rolefiller list">
+            <tr class="headerbar">
+                <th>Person and roles</th>
+               {% if not included %}
+                    <th>Circle</th>
+                {% endif %}
+                {% if not hide_points %}
+                <th class="number">Points assigned</th>
+                {% endif %}
+                <th></th>
+            </tr>
+            {% for person in roles_per_person %}
+              <tr class="headerbar">
+                <th><a href="{% url 'person_detail' pk=person.object_list.first.person.pk %}">{{ person.object_list.first.person }}</a></th>
+                <th id="rolefiller_list_total" class="total number">{{ person.total }}</th>
+                <th></th>
+              </tr>
+              {% for obj in person.object_list %}
+                <tr class="{% if obj.attention_points == 0  %}action{% endif %} {% if obj.is_deleted_in_glassfrog == 1  %}deleted{% endif %}" >
+                    <td> - {{ obj.role }}</td>
+                    {% if not included %}
+                        <td>
+                            {% if obj.role.circle %}
+                                <a href="{% url 'circle_detail' pk=obj.role.circle.pk %}">{{ obj.role.circle}}</a>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                    {% if not hide_points %}
+                    {% if obj.role.circle in leadlink_circle_rolefillers %}
+                    <td class="number">
+                        {% if all_roles %}
+                        <form class="aps_update_form" action="{% url 'rolefiller_update' pk=obj.pk %}" method="POST">
+                        {% else %}
+                        <form class="aps_update_form" action="{% url 'rolefiller_update' pk=obj.pk %}?next={{ request.path }}" method="POST">
+                        {% endif %}
+                            {% csrf_token %}
+                            <input type="text" name="attention_points" value="{{ obj.attention_points }}" />
+                            <input type="submit" value="Update" class="button_small" style="display:none;" />
+                        </form>
+                   </td>
+                    {% else %}
+                    <td class="number granted">{{ obj.attention_points }}</td>
+                    {% endif %}
+                    {% endif %}
+                    <td class="icons">
+                        {% if obj.is_deleted_in_glassfrog %}
+                            <form class="aps_delete" action="{% url 'rolefiller_delete' obj.id %}" method="post">{% csrf_token %}
+                                <input type="image" name="delete" value="Confirm" src="{% static "img/delete.icon.png" %}" alt="Delete" height="16" />
+                            </form> <p></p>
+                        {% endif %}
+                        <a href="{{ obj.role.glassfrog_url }}" target="glassfrog">
+                            <img src="{% static "img/glassfrog.icon.png" %}" alt="View in glassfrog" height="16" />
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+        </table>
+
+        <!-- include javascript to do some AJAX magic -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="{% static "js/main.js" %}"></script>

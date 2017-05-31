@@ -1,0 +1,37 @@
+{% load static %}
+                <table class="role list">
+                    <tr class="headerbar">
+                        <th>Name</th>
+                        {% if not included %}
+                            <th>Circle</th>
+                            <th>Role represents a Circle</th>
+                        {% endif %}
+                        <th></th>
+                    </tr>
+                    {% for obj in object_list %}
+                    <tr class="{% if obj.is_deleted_in_glassfrog == 1  %}deleted{% endif %}">
+                        <td>{{ obj.name }}</td>
+                        {% if not included %}
+                            <td>
+                                {% if obj.circle %}
+                                    <a href="{% url 'circle_detail' pk=obj.circle.pk %}">{{ obj.circle}}</a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if obj.supporting_circle %} TRUE {% endif %}
+                            </td>
+                        {% endif %}
+                        <td class="icons">
+                        {% if obj.is_deleted_in_glassfrog %}
+                            <form class="aps_delete" action="{% url 'role_delete' obj.id %}" method="post">{% csrf_token %}
+                                <input type="image" name="delete" value="Confirm" src="{% static "img/delete.icon.png" %}" alt="Delete" height="16" />
+                            </form> <p></p>
+                        {% else %}
+                            <a href="{{ obj.glassfrog_url }}" target="glassfrog">
+                                <img src="{% static "img/glassfrog.icon.png" %}" alt="View in glassfrog" height="16" />
+                            </a>
+                        {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>

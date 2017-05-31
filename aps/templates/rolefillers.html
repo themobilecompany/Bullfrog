@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block header %}
+    <h2>Role Fillers</h2>
+{% endblock %}
+{% block content %}
+    {% include "rolefiller_list.html" with total=rolefillers.total object_list=rolefillers.object_list all_roles=1 leadlink_circle_rolefillers=leadlink_circle_rolefillers %}
+{% endblock %}

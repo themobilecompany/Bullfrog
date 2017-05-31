@@ -1,0 +1,23 @@
+ version: '2'
+ services:
+   db:
+     image: postgres
+     ports:
+       - "5432:5432"
+     volumes: 
+       - bullfrog-db-volume:/data/postgres
+     restart: always
+
+   web:
+     build: .
+     command: python manage.py runserver 0.0.0.0:80
+     volumes:
+       - .:/code
+     ports:
+       - "80:80"
+     restart: always
+     depends_on:
+       - db
+
+ volumes:
+   bullfrog-db-volume:

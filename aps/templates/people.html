@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h2>People</h2>
+{% endblock %}
+{% block content %}
+    {% include "person_list.html" with additional_context=persons is_leadlink=is_leadlink %}
+{% endblock %}

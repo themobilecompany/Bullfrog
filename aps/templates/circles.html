@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h2>Circles</h2>
+{% endblock %}
+{% block content %}
+
+    {% include "circle_list.html" with total=circles.total object_list=circles.object_list leadlink_subcircles=leadlink_subcircles editable=1 %}
+{% endblock %}

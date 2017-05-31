@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block header %}
+            <ol class="breadcrumb">
+                {% for breadcrumb in additional_context.breadcrumbs reversed %}
+                    <li><a href="{% url 'circle_detail' pk=breadcrumb.pk %}" >{{ breadcrumb.name }}</a>{% if not forloop.last %}&nbsp;/{% endif %}</li>
+                {% endfor %}
+            </ol>
+            <h2>{{ object.name }} </h2>
+{% endblock %}
+
+{% block content %}
+    {% include "circle_detail.html" %}
+{% endblock %}

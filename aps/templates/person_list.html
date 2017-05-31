@@ -1,0 +1,58 @@
+{% load static %}
+
+        <table class="person list">
+            <tr class="headerbar">
+                <th>Name</th>
+                <th class="number">FTE</th>
+                {% if additional_context.total_roles %}
+                    <th class="number">Circles</th>
+                    <th class="number">Roles</th>
+                    <th class="number">Points<br/>assigned</th>
+                    <th class="number">Expected<br>utilisation</th>
+                {% endif %}
+                <th></th>
+            </tr>
+            {% if additional_context.total %}
+            <tr class="totalsbar">
+                <td></td>
+                <td class="total number">{{ additional_context.total }}</td>
+                {% if additional_context.total_roles %}
+                    <td class=""></td>
+                    <td class="total number">{{ additional_context.total_roles }}</td>
+                    <td class="total number">{{ additional_context.total_attention_points }}</td>
+                    <td class="average number">{{ additional_context.total_utilisation }}%</td>
+                {% endif %}
+                <td></td>
+            </tr>
+            {% endif %}
+            {% for obj in additional_context.object_list %}
+                <tr class="{% if obj.contract_fte == 0 %}action{% endif %} {% if obj.is_deleted_in_glassfrog == 1  %}deleted{% endif %}" >
+                    <td><a href="{% url 'person_detail' pk=obj.pk %}">{{ obj.name }}</a></td>
+
+                    {# Only allow leadlinks to edit FTE points #}
+                    {% if is_leadlink %}
+                    <td class="number"><a href="{% url 'person_update' pk=obj.pk %}?next={{ request.path }}">{{ obj.contract_fte }}</a></td>
+                    {% else %}
+                    <td class="number">{{ obj.contract_fte }}</td>
+                    {% endif %}
+
+                    {% if additional_context.total_roles %}
+                        <td class="number">{{ obj.rolefiller__role__circle__count }}</td>
+                        <td class="number">{{ obj.rolefiller__count }}</td>
+                        <td class="number">{{ obj.rolefiller__attention_points__sum }}</td>
+                        <td class="number">{{ obj.expected_utilisation }}%</td>
+                        {% endif %}
+                    <td class="icons">
+                        {% if obj.is_deleted_in_glassfrog %}
+                            <form class="aps_delete" action="{% url 'person_delete' obj.id %}" method="post">{% csrf_token %}
+                                <input type="image" name="delete" value="Confirm" src="{% static "img/delete.icon.png" %}" alt="Delete" height="16" />
+                            </form> <p></p>
+                        {% else %}
+                            <a href="{{ obj.glassfrog_url }}" target="glassfrog">
+                                <img src="{% static "img/glassfrog.icon.png" %}" alt="View in glassfrog" height="16" />
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>

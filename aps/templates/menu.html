@@ -1,0 +1,28 @@
+    <nav class="clearfix">
+        <ul class="welcome">
+            {% if user.is_authenticated %}
+                    <li><a href="{% url 'me' %}">{{ user.first_name }} {{ user.last_name }}</a></li>
+                    {% if request.user.is_staff %}
+                        <li><a href="/admin">Admin</a></li>
+                        <li><a href="{% url 'import' %}">Import</a></li>
+                        <li><a href="{% url 'roles' %}">Roles</a></li>
+                    {% endif %}
+                    {% if is_leadlink %}
+                    <li><a href="{% url 'index' %}">All Tasks</a></li>
+                    {% endif %}
+                    <li><a href="/password_change">Change Password</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+        <ul class="menu">
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'me' %}">My Attention Points</a></li>
+                <li><a href="{% url 'circles' %}">All Circles</a></li>
+                <!-- <li><a href="{% url 'rolefillers' %}">All Role Fillers</a></li> -->
+                <li><a href="{% url 'people' %}">All People</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+            {% endif %}
+        </ul>
+    </nav>

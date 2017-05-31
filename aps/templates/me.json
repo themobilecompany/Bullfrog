@@ -1,0 +1,5 @@
+{
+    "name": "{{ object.name }}",
+    "person_details": {% include "person_detail.json" %},
+    "circle_list": {% include "circle_list.json" with object_list=additional_context.circles_leadlink %}
+}

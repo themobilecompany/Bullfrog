@@ -1,0 +1,73 @@
+{% load static %}
+
+            <div class="sectionwrapper">
+                <div class="section circle_detail">
+                    <h3>Attention Point Balance</h3>
+                    <table class="list">
+                        <tr class="headerbar">
+                            <th>Balance:</td>
+                            <th id="circle_detail_balance" class="number">{{ additional_context.attention_points_balance }}</td>
+                        </tr>
+                        <tr>
+                            <td>Points granted by {% if object.super_circle %}<a href="{% url 'circle_detail' pk=object.super_circle.pk %}" >{{ object.super_circle }}</a>{% endif %} Lead Link:</td>
+                            <td id="circle_detail_granted" class="number">{{ additional_context.attention_points_granted }}</td>
+                        </tr>
+                            <td>Points assigned:</td>
+                            <td id="circle_detail_assigned" class="number">{{ additional_context.attention_points_assigned }}</td>
+                        </tr>
+                        </tr>
+                            <td style="font-weight:normal"> - Within Sub-Circles:</td>
+                            <td id="circle_detail_assigned_within_subcircles" class="number">{{ additional_context.circles.attention_points_assigned}}</td>
+                        </tr>
+                        </tr>
+                            <td style="font-weight:normal"> - To Role Fillers:</td>
+                            <td id="circle_detail_assigned_to_rolefillers" class="number">{{ additional_context.rolefillers.total}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="section infobox infobox_attention_points">
+                    <h4>(i) Attention Points</h4>
+                    <p>APs define your average maximum allowed focus per role.<br/>
+                    100 APs &asymp; 1 week fulltime<br/>
+                    1 AP &asymp; 0.4 hrs<br/>
+                    1 hour &asymp; 2.5 APs<br/>
+                    Total APs can exceed 100%<br/>
+                    </p>
+                    <p><strong>Note</strong>: APs give relative weight to your focus; Look at all your Roles and divide your focus relative to the assigned APs.</p>
+                </div>
+            </div>
+
+
+            <div class="sectionwrapper">
+                <div class="section circle_detail">
+                    <h3>Sub-Circles</h3>
+                    {% if additional_context.circles.object_list %}
+                        {% include "circle_list.html" with attention_points_granted=additional_context.circles.total attention_points_assigned=additional_context.circles.attention_points_assigned attention_points_balance=additional_context.circles.attention_points_balance object_list=additional_context.circles.object_list %}
+                    {% else %}
+                        <P>No sub-circles</P>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="sectionwrapper">
+                <div class="section circle_detail">
+                    <h3>Role Fillers</h3>
+                    {% if additional_context.rolefillers.object_list %}
+                        {% include "rolefiller_list.html" with included=True  allRolesTotal=additional_context.rolefillers.total roles_per_person=additional_context.roles_per_person %}
+                    {% else %}
+                        <P>No rolefillers</P>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if additional_context.unassigned_roles %}
+            <div class="sectionwrapper">
+                <div class="section action">
+                    <h3>Unassigned Roles</h3>
+                    <p>These Roles are currently not filled and can not have attention points<br/>
+                        assigned to them. While redistributing attention points, please consider <br/>
+                        that these roles might need attention points in the future.
+                    </p>
+                    {% include "role_list.html" with included=True total=0 object_list=additional_context.unassigned_roles %}
+                </div>
+            </div>
+            {% endif %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+
+{% block header %}
+    <h2>Delete {{ object }}?</h2>
+{% endblock %}
+{% block content %}
+    <form action="" method="post">{% csrf_token %}
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+        <input type="submit" value="Confirm" />
+        <input type="button" value="Cancel" onClick="javascript:window.history.back();" class="secondary_button" />
+    </form>
+{% endblock %}

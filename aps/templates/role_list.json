@@ -1,0 +1,16 @@
+{
+    "role_list" : [
+        {% for obj in object_list %}
+            {
+                "is_deleted_in_glassfrog": {% if obj.is_deleted_in_glassfrog == 1  %}true{%else%}false{% endif %},
+                "name": "{{ obj.name }}",
+                {% if obj.circle %}
+                    "circle_pk": {{ obj.circle.pk }},
+                    "circle_name": "{{ obj.circle}}",
+                {% endif %}
+                "is_supporting_circle": {% if obj.supporting_circle %}true{%else%}false{% endif %}
+            }
+            {% if not forloop.last %},{% endif %}
+        {% endfor %}
+        ]
+}

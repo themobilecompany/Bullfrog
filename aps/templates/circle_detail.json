@@ -1,0 +1,22 @@
+{
+    "attention_points_balance": "{{ additional_context.attention_points_balance }}",
+    "attention_points_granted": "{{ additional_context.attention_points_granted }}",
+    "attention_points_assigned": "{{ additional_context.attention_points_assigned }}",
+    "subcircles_attention_points_assigned": "{{ additional_context.circles.attention_points_assigned }}",
+    "subcircles_rolefillers_total": "{{ additional_context.rolefillers.total}}",
+    {% if additional_context.circles.object_list %}
+        "subcircles" : {% include "circle_list.json" with attention_points_granted=additional_context.circles.total attention_points_assigned=additional_context.circles.attention_points_assigned attention_points_balance=additional_context.circles.attention_points_balance object_list=additional_context.circles.object_list %},
+    {% else %}
+        "subcircles" : null,
+    {% endif %}
+    {% if additional_context.rolefillers.object_list %}
+        "rolefillers": {% include "rolefiller_list.json" with included=True  total=additional_context.rolefillers.total object_list=additional_context.rolefillers.object_list %},
+    {% else %}
+        "rolefillers": null,
+    {% endif %}
+    {% if additional_context.unassigned_roles %}
+        "unassigned_roles": {% include "role_list.json" with included=True total=0 object_list=additional_context.unassigned_roles %}
+    {% else %}
+        "unassigned_roles": null
+    {% endif %}
+}

@@ -1,0 +1,72 @@
+{% load static %}
+
+            <div class="sectionwrapper">
+                <div class="section circle_detail">
+                    <table class="list">
+                        <tr>
+                            <td>fte</td>
+                            <td class="number">{{ object.contract_fte }}</td>
+                        </tr>
+                            <td>Circles</td>
+                            <td class="number">{{ additional_context.circle_count }}</td>
+                        </tr>
+                        </tr>
+                            <td>Roles</td>
+                            <td class="number">{{ additional_context.rolefiller_count }}</td>
+                        </tr>
+                        </tr>
+                            <td>Points assigned</td>
+                            <td class="number">{{ additional_context.attention_points_sum }}</td>
+                        </tr>
+                        </tr>
+                            <td>Expected utilisation</td>
+                            <td class="number">{{ object.expected_utilisation }}%</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="section infobox infobox_attention_points">
+                    <h4>(i) Attention Points</h4>
+                    <p>APs define your average maximum allowed focus per role.<br/>
+                    100 APs &asymp; 1 week fulltime<br/>
+                    1 AP &asymp; 0.4 hrs<br/>
+                    1 hour &asymp; 2.5 APs<br/>
+                    Total APs can exceed 100%<br/>
+                    </p>
+                    <p><strong>Note</strong>: APs give relative weight to your focus; Look at all your Roles and divide your focus relative to the assigned APs.</p>
+                </div>
+            </div>
+
+            {% if leadlink_circles.object_list %}
+            <div class="sectionwrapper">
+                <div class="wrapper">
+                    <h3>My Lead Link Circles</h3>
+                    {% include "circle_list.html" with total=leadlink_circles.total object_list=leadlink_circles.object_list editable=0 %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="sectionwrapper">
+                <div class="section circle_detail">
+                    <h3>My Roles</h3>
+                    <table class="list">
+                        {% for circle in additional_context.circles %}
+                            <tr class="headerbar">
+                                <th><a href="{% url 'circle_detail' pk=circle.pk %}">{{circle}}</a></th>
+                                <th class="number">{{circle.total_attention_points}}</th>
+                                <th ></th>
+                            </tr>
+                            {% for rolefiller in circle.person_roles %}
+                                <tr class="{% if rolefiller.attention_points == 0 %}action{% endif %}" >
+                                    <td >{{rolefiller.role}}</td>
+                                    <td class="number">{{rolefiller.attention_points}}</td>
+                                    <td class="icons">
+                                        <a href="{{ rolefiller.role.glassfrog_url }}" target="glassfrog">
+                                            <img src="{% static "img/glassfrog.icon.png" %}" alt="View in glassfrog" height="16" />
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>

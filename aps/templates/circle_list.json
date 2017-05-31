@@ -1,0 +1,23 @@
+{
+    "circle_list_totals": {
+        "circle_list_granted":  "{{ attention_points_granted }}",
+        "circle_list_assigned": "{{ attention_points_assigned }}",
+        "circle_list_balance":  "{{ attention_points_balance }}"
+    },
+    "circle_list": [
+        {% for obj in object_list %}
+            {
+                "is_deleted_in_glassfrog": {% if obj.is_deleted_in_glassfrog == 1  %}true{%else%}false{% endif %},
+                "action_required": {% if obj.attention_points == 0  %}true{%else%}false{% endif %},
+                "attention_points": {{ obj.attention_points }},
+                "pk": {{ obj.pk }},
+                "name": "{{ obj.name }}",
+                "id": {{ obj.id }},
+                "attention_points_granted": "{{ obj.attention_points_granted }}",
+                "attention_points_assigned": "{{ obj.attention_points_assigned }}",
+                "attention_points_balance": "{{ obj.attention_points_balance }}"
+            }
+            {% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ]
+}

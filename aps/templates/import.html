@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h2>Import</h2>
+{% endblock %}
+{% block content %}
+    {% for msg in messages %}
+        {{ msg }}<br/>
+    {% endfor %}
+{% endblock %}

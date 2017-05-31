@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+
+{% block header %}
+            <h2>My Attention Points ({{ object.name }}) </h2>
+{% endblock %}
+
+{% block content %}
+                {% if is_leadlink %}
+                    {% if circles_without_attention_points.object_list %}
+                        <div class="sectionwrapper">
+                            <div class="wrapper">
+                                <div class="section action">
+                                    <h3>Sub-Circles without attention points granted</h3>
+                                    {% include "circle_list.html" with total=circles_without_attention_points.total object_list=circles_without_attention_points.object_list editable=1 %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if circles_not_in_glassfrog %}
+                        <div class="sectionwrapper">
+                            <div class="wrapper">
+                                <div class="section action">
+                                    <h3>Sub-Circles that don't exist (anymore) in Glassfrog</h3>
+                                    <p>
+                                        Please delete these Circles.</br>
+                                        Any remaining Attention Points should be redistributed.
+                                    </p>
+                                    {% include "circle_list.html" with object_list=circles_not_in_glassfrog hide_points=1 %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if roles_not_in_glassfrog %}
+                        <div class="sectionwrapper">
+                            <div class="wrapper">
+                                <div class="section action">
+                                    <h3>Roles that don't exist (anymore) in Glassfrog</h3>
+                                    <p>
+                                        Consider redistributing the Attentions Points that become available when deleting these roles.
+                                    </p>
+                                    {% include "role_list.html" with object_list=roles_not_in_glassfrog hide_points=1 %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if rolefillers_not_in_glassfrog %}
+                        <div class="sectionwrapper">
+                            <div class="wrapper">
+                                <div class="section action">
+                                    <h3>Role Fillers that don't exist (anymore) in Glassfrog</h3>
+                                    <p>
+                                        Please delete these Role Fillers.<br/>
+                                        Any remaining Attention Points should be redistributed.
+                                    </p>
+                                    {% include "rolefiller_list.html" with object_list=rolefillers_not_in_glassfrog hide_points=1 %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if rolefillers_without_attention_points %}
+                        <div class="sectionwrapper">
+                            <div class="wrapper">
+                                <div class="section action">
+                                    <h3>Role Fillers without attention points assigned</h3>
+                                    {% include "rolefiller_list.html" with object_list=rolefillers_without_attention_points %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% include "person_detail.html" %}
+
+{% endblock %}
+

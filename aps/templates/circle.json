@@ -1,0 +1,13 @@
+{
+    "name" : "{{ object.name }}",
+    "breadcrumbs": [
+        {% for breadcrumb in additional_context.breadcrumbs reversed %}
+            {
+                "pk": {{breadcrumb.pk }},
+                "name": "{{ breadcrumb.name }}"
+            }
+            {% if not forloop.last %},{% endif %}
+        {% endfor %}
+        ],
+    "circle_details": {% include "circle_detail.json" %}
+}
