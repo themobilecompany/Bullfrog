@@ -4,7 +4,7 @@ For organisations that have implemented Holocracy, an *Attention Point Managemen
 ### More info
 This tool connects to the [Glassfrog Api](https://github.com/holacracyone/glassfrog-api/tree/API_v3) to download all People, Circles and Roles, and their connections.
 These are imported into a local database, and values are updated when imported again (either manually via the web interface, or via a scheduled cronjob).
-The web interface allows logged in users (credentials to be created via the /admin interface) to administer and review Attention Points per RoleFiller and Sub-Circle.
+The web interface allows logged in users to administer and review Attention Points per RoleFiller and Sub-Circle.
 The assigned Attention Points of RoleFillers in nested circles propagate up the parent circle, showing as "assigned attention points" of the sub-circles.
 
 ### Dependencies and Requirements
@@ -14,8 +14,8 @@ The assigned Attention Points of RoleFillers in nested circles propagate up the 
 - Some basic knowledge in Docker, Django, Python, bash
 
 ### To do:
- - Randomise password generation for new users (GlassfrogImporter.py)
- - Set up SMTP mail to email new users when an account is created for them (GlassfrogImporter.py)
+ - Randomise password generation for new users (Bullfrog/aps/utils/GlassfrogImporter.py)
+ - Set up SMTP mail to email new users when an account is created for them (Bullfrog/aps/utils/GlassfrogImporter.py)
 
 ---
 
@@ -50,27 +50,27 @@ We're assuming you've set up in a Linux environment. In our case, we used CentOS
     mkdir /mnt/{YOUR_BACKUP_DIR}
     nano /etc/fstab
     ```
-5. Auto-start the Docker Daemon: 
-    ```
-    sudo chkconfig docker on
-    ```
-6. Mount the network share for backups by adding this following to `/etc/fstab`: 
+5. Mount the network share for backups by adding this following to `/etc/fstab`:
     ```
     //{YOUR_SERVER_IP}/{YOUR_BACKUP_DIR} /mnt/{YOUR_BACKUP_DIR} cifs {YOUR_GIT_USER_CREDENTIALS},users,auto,user_$
     ```
-    
+
     Then run `mount -a`.
-7. Set up Contab jobs for auto importing and backup:
+6. Set up Contab jobs for auto importing and backup:
     ```
     sudo crontab -e
     ```
-    
+
     Then:
     ```
     @reboot mount -a
     0 20 * * * /bin/bash /srv/bullfrog/cron_daily.sh
     */10 * * * * /bin/bash /srv/bullfrog/cron_10_minutely.sh
     #empty line needed
+    ```
+7. Auto-start the Docker Daemon:
+    ```
+    sudo chkconfig docker on
     ```
 8. Now that your server environment is ready, you'll need to set up the application. See the `Set up instructions for Development` below.
 
@@ -101,7 +101,10 @@ If you are setting up on the server, skip step 1 and 2 (since you have already d
         - Enter `python manage.py createsuperuser`
     - HARD MODE (everywhere else, including on your server):
         - In terminal, `$~> docker ps` ==> Note the "CONTAINER ID" of the "bullfrogdocker_web" container
-        - Login to the web container:`$>docker exec -i -t <Container ID> /bin/bash
+        - Login to the web container:
+        ```
+        $>docker exec -i -t <Container ID> /bin/bash
+        ```
         - Run database migration: `root/code# python manage.py migrate`
         - Create superuser, to be able to login to the admin panel: `root:/code# python manage.py createsuperuser`
 6. Run the initial import by going to [http://localhost:8000/import](http://localhost:8000/import) if on your own machine. If setting up on your server, then replace `localhost` with your server's hostname.
