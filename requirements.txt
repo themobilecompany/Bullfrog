@@ -1,4 +1,4 @@
-Django==1.10.7
+Django==1.10.8
 psycopg2
 requests
 whitenoise
